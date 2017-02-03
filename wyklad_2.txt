@@ -1,0 +1,58 @@
+<cctype> - character type functions
+<cmath> = math.h
+  exp(double) - e^x
+  expm1(double) - e^x - 1
+  exp2(double) - 2^x
+  frexp(double, int* power) - mantissa and power (by ref)
+  ldexp(double, int power)
+  log1p - log(x + 1)
+  modf(double, double* integral) - returns fractional part, integral part by ref
+  sqrt, cbrt
+  hypot(double x, double y) - length of hypotenuse given sides x and y
+  fmod
+  remainder
+  fdim
+  fma
+  copysign
+  nextafter
+  nexttoward
+  isfinite
+  isnan
+  isinf
+  isnormal
+  signbit
+  errno - IMPORTANT : last error number (!= 0) if no error can be thrown
+  
+<complex>
+  real, imag
+  norm, conj, polar, arg
+  
+  
+brace-init-list does NOT implicitly convert type
+
+SEQUENCE POINTS
+
+Comma operator - discards previous value
+
+cin error behaviour - depends on system (either last character or 0)
+cin error flags
+cin >> // Reads until whitespace
+
+cin.getline() // Gets until a newline.
+cin.clear() // Clears errors.
+
+if (cin >> c) // Has boolean value!
+
+switch {
+    default:    //  Location of default has no importance!
+        ...
+        break;
+    case 1:
+        ;
+        break;
+}
+
+
+for (int i : T) {
+    //  For each loop
+}

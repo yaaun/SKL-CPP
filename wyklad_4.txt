@@ -1,0 +1,21 @@
+Deklaracje/definicje funkcji.
+
+int i = 1;
+int& iref = i;
+
+++x = 3;    //  OK, ++x is an lvalue (implementation!)
+x++ = 3;    //  Wrong, x++ is firstly copied into a temporary, incremented, and then the temporary rvalue is returned.
+(i < 3 ? i : x) = ...   //  Returns an lvalue, hence valid.
+
+const string& s = string("ABC");
+const string& s2 = s;   //  Const-refs can be used for both lvalues and rvalues.
+
+for (int i : t) copy-constructs => t will not be modified by operating on i
+for (int& iref : t) makes references => t will be modified by operating on iref
+
+std::move
+std::swap
+
+sizeof(array) // Only in same block!
+const int* ip;  //  Pointer to const int.
+int* const; //  Const pointer to int.

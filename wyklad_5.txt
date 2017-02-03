@@ -1,0 +1,106 @@
+Wykład 5
+========
+
+void f(int);
+void f(int&);   //  Not a valid overload (same invocation)!
+
+---
+
+int a = 1;
+const int b = 2;
+
+void f(int&); // A
+void f(const int&); // B
+void f(int&&);  // C
+
+f(a);   //  A
+f(b);   //  B
+f(3);   //  C
+
+
+---
+
+//  Function pointer
+int (*fp)(int, int);
+
+
+//  Function reference
+int (&fr)(int, int);
+
+---
+//  VarArgs
+#include <cstdarg>
+va_start(va_list arglist, const char* format);
+va_arg(va_list arglist, typename T);
+va_copy();
+va_end(arglist);
+struct va_list;
+
+---
+//  Templates
+template <class/typename T> ...
+
+template <typename T, typename V>
+T func(T a, V b) {
+    return a-b;
+}
+
+func<int, double>(1, 2.0);  //  Explicit generic type declaration
+func(1, 2.0);   //  Rely on compiler type deduction
+
+//  Default arguments should be in the declaration
+void f(int, int b = 0);
+void f(int a, int b) {...}
+
+//  Template specialization
+template <typename T>
+T f(T t);
+...
+template <> //  Empty angle brackets
+char f<char> (char t) {...} // Explicit generic type declaration
+
+template <>
+string f<string>(string t) {...}
+
+Generic templates, specializations as well as ordinary functions can all be
+overloaded relative to each other:
+
+void func(int);
+template <typename T> void func(T);
+template <> void func<string>(string);
+
+func(1);  //  ordinary function
+func(2.0);  //  generic template
+func(string("ABC")); // specialization
+func("C_STR");  //  generic template (const char* is not implicitly converted)
+
+---
+VarArg templates
+
+template <typename ...Types>
+void g(Types ... types) {
+    //  All operators on 'types' will be applied element-wise - parameter pack expansion
+    sizeof...(types);   // get number of types
+}
+
+---
+decltype - automatic type deduction based on expression
+
+auto mul(int x, int y) -> decltype(x, y) {
+    return x*y;
+}
+
+NOTE: `type func(...)` and `auto func(...) -> type` are, by definition, identical
+(alternate syntaxes).
+
+
+---
+//  Lambda expressions
+[=] // capture all by value
+[&] // capture all by referenece
+[=, &x] // capture all except x by value, x by reference
+
+mutable // allows lambda to have side effects on captured objects (otherwise this is forbidden)
+
+Beware of closures: variables captured by value are copied and, even if the lambda
+is mutable, will not be modified.

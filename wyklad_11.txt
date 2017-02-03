@@ -1,0 +1,72 @@
+Wykład 11 (?)
+=============
+
+
+Dziedziczenie
+-------------
+Nie dziedziczone: [kon/de]struktory, operator=
+
+int a{0}; vs int a(0); vs int a = 0; // Tylko pierwszy nie wykonuje niejawnych konwersji!
+
+Obiekty klasy bazowej są konstruowane przed konstrukcją obiektu pochodnego.
+Bezparametrowe konstruktory są wywoływane domyślnie przez konstruktory
+klasy pochodnej.
+
+using w klasie - może służyć do zaimportowania konstruktora z klasy bazowej.
+
+Konstruktor domyślny wywołuje konstruktor bezargumentowy w klasie bazowej.
+
+Destruktory są wywoływane w odwrotnej kolejności, od pochodnej do bazowej,
+domyślnie (bez konieczności wywoływania jawnego).
+
+Konstruktor z wartościami domyślnymi dla każdego argumentu jest taki sam
+jak konstruktor bezargumentowy.
+
+using ... może złamać zasady dziedziczenia private/protected dla poszczególnych
+nazw.
+
+Zmienne (nie wskaźniki!) klasy bazowej mogą mieć przypisaną klasę pochodną.
+Dodatkowa funkcjonalność obiektu klasy pochodnej jest wtedy tracona.
+
+Przesłanianie nazw: nazwy metod z klasy bazowej są niewidoczne gdy operujemy
+zmienną klasy pochodnej (zachodzi przesłanianie).
+
+    //  Uwaga na kod:
+    class A {
+      public:
+        void f(double);
+    };
+    
+    class B : public A {
+      public:
+        void f(int);
+    };
+    
+    B b;
+    b.f(3.14); //  B::f(int) jest wywoływana z niejawną konwersją!
+
+Poszukiwanie funkcji do wywołania (jeżeli nie są virtual) odbywa się na
+podstawie typu zmiennej, a nie rzeczywistego typu jej zawartości. Funkcje o
+tej samej nazwie w klasie pochodnej przesłaniają funkcje w klasie bazowej,
+nawet wtedy gdy typy są różne.
+
+(Opis w http://stackoverflow.com/questions/1628768/why-does-an-overridden-function-in-the-derived-class-hide-other-overloads-of-the) 
+
+Wniosek: OVERLOADING DOESN'T WORK FOR DERIVED CLASSES!
+
+    //  Poniższa implementacja obchodzi to za pomocą using A::f.
+    class B : public A {
+      public:
+        using A::f;
+        void f(int);
+    }
+    
+    B b;
+    b.f(3); //  B::f(int) jest wywoływane
+
+Wirtualne funkcje: wiążą tylko dla referencji/wskaźników. Zmienne klasowe
+są zawsze wiązane statycznie.
+
+Wirtualne destruktory!
+
+virtual pojawia się tylko w deklaraji klasy.

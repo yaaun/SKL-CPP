@@ -1,0 +1,39 @@
+Wykład C++, 2016-12-08
+======================
+<functional>:
+    std::function<T>
+    std::bind();
+    namespace std::placeholders
+    
+Remember about instance argument for methods (i.e. the 'this' argument) with bind
+
+<utility>:
+    template struct pair;
+    pair.swap(pair)
+    get<unsigned n>(pair)
+    
+<tuple>:
+    tuple_size
+    tuple_element
+    swap
+    make_tuple
+    tie
+    tuple_cat // concatenate
+
+STL:
+    * iterators
+    * collections
+    * algorithms
+    
+<array>
+<vector>
+<deque>
+<list>
+<forward_list>
+
+at vs operator[] - incorrect size
+fill()
+swap()
+get()
+
+for_each()
