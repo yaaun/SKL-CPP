@@ -1,5 +1,7 @@
 #include <istream>
 #include <ostream>
+#include <vector>
+#include <stdexcept>
 #include "Osoba.hpp"
 
 std::ostream& operator<<(std::ostream& ostr, const Osoba& os) {
@@ -18,10 +20,30 @@ std::ostream& operator<<(std::ostream& ostr, const Osoba& os) {
     return ostr;
 }
 
-std::istream& operator>>(std::istream& istr, Osoba& os) {
+std::istream& operator>>(std::istream& istr, std::Osoba& os) {
     std::string names, surnames;
+    std::string agestr, sexstr;
+    int age;
+    char sex;
     
     istr >> names;
     istr >> surnames;
+    istr >> agestr;
+    istr >> sexstr;
     
+    try {
+        age = std::stoi(agestr, nullptr, 10);
+        
+        if (age < 0) {
+            throw std::invalid_argument{"age must be a positive integer"};
+        }
+    } catch (const std::invalid_argument& e) {
+        throw std::exception{"age must be a positive integer"};
+    }
+    
+    sex = sexstr[0];
+    
+    if (sex != Osoba::M || sex != Osoba::K) {
+        throw std::exception{"invalid person sex (must be either 'M' or 'K')"};
+    }
 }
